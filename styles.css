@@ -3,6 +3,9 @@
   --muted-bg:#fbf8f6;
   --accent:#8b5cf6;
   --accent-600:#6d28d9;
+  --section-bg-a:#fbf5ff;
+  --section-bg-b:#ffffff;
+  --footer-bg:#f6f0ff;
   --text:#0f172a;
   --muted-text:#52606a;
   --card:#ffffff;
@@ -15,13 +18,13 @@ body{
   margin:0;
   font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   color:var(--text);
-  background: var(--muted-bg);
+  background: var(--section-bg-b);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   padding-top: var(--header-height);
 }
 .container{max-width:1100px;margin:0 auto;padding:28px}
-.site-header{backdrop-filter: blur(6px);background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.9));border-bottom:1px solid rgba(15,23,42,0.04);position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--header-height);}
+.site-header{backdrop-filter: blur(6px);background:#ffffff;border-bottom:1px solid rgba(109,40,217,0.06);position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--header-height)}
 .site-header .container{height:var(--header-height);display:flex;align-items:center;padding-left:28px;padding-right:28px}
 .nav-inner{display:flex;align-items:center;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:18px;font-weight:700;color:var(--text);text-decoration:none}
@@ -30,7 +33,7 @@ body{
 .logo-sm{width:72px;height:72px}
 .site-nav{display:flex;align-items:center;gap:18px}
 .site-nav a{color:var(--muted-text);text-decoration:none;padding:6px 12px 26px;border-radius:8px;transition:all .18s ease;position:relative;overflow:visible;display:inline-flex;align-items:center}
-.site-nav a::after{content:'';position:absolute;left:6px;right:6px;height:3px;bottom:6px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-600));transform:scaleX(0);transform-origin:center center;transition:transform .18s ease,opacity .18s ease;opacity:0}
+.site-nav a::after{content:'';position:absolute;left:6px;right:6px;height:3px;bottom:6px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-600));transform:scaleX(0);transform-origin:left center;transition:transform .18s ease,opacity .18s ease;opacity:0}
 .site-nav a:hover{color:var(--accent-600);background:rgba(139,92,246,0.06)}
 .site-nav a:hover::after{transform:scaleX(1);opacity:1}
 .site-nav a.active{color:var(--accent-600)}
@@ -74,14 +77,20 @@ body{
 .link-card{display:inline-block;margin-top:10px;color:var(--accent-600);font-weight:600;text-decoration:none}
 
 .connect h2,.faq h2{margin-top:0}
-.section{padding:28px 0;scroll-margin-top:var(--header-height)}
+.section{padding:18px 0;scroll-margin-top:var(--header-height)}
+
+/* two alternating section backgrounds */
+main > section:nth-child(odd){background:var(--section-bg-a)}
+main > section:nth-child(even){background:var(--section-bg-b)}
+
+/* footer background */
+.site-footer{background:var(--footer-bg)}
 .section-heading{font-size:28px;font-weight:700;margin-bottom:10px;padding-bottom:8px;position:relative}
 
-/* place separators aligned to the content container so lines match column width */
-.section.container,
-.section .container{
-  border-top:1px solid rgba(15,23,42,0.03);
-}
+/* removed separators — rely on alternating background colors for section separation */
+
+/* reduce inner container padding for sections so headings sit closer to the top */
+.section > .container{padding-top:12px;padding-bottom:18px}
 
 .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);transition:transform .18s ease,box-shadow .18s ease}
 .card:hover{transform:translateY(-8px);box-shadow:0 24px 48px rgba(15,23,42,0.08)}
@@ -97,7 +106,7 @@ body{
 .accordion-toggle{width:100%;text-align:left;padding:14px 18px;border:0;background:linear-gradient(180deg, #fff, #fbfbfd);font-weight:600;cursor:pointer;border-radius:10px}
 .accordion-panel{padding:0 18px;max-height:0;overflow:hidden;transition:max-height .28s ease}
 
-.site-footer{border-top:1px solid rgba(15,23,42,0.04);margin-top:18px;padding:22px 0;background:transparent}
+.site-footer{border-top:none;margin-top:18px;padding:22px 0;background:var(--section-bg-a)}
 .footer-inner{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
 .footer-links{display:flex;gap:20px;align-items:center;justify-content:center}
 .footer-links a{margin:0;color:var(--muted-text);text-decoration:none}
