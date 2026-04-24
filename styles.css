@@ -7,6 +7,7 @@
   --muted-text:#52606a;
   --card:#ffffff;
   --shadow: 0 8px 30px rgba(15,23,42,0.06);
+  --header-height:96px;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -17,10 +18,11 @@ body{
   background: var(--muted-bg);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  padding-top: var(--header-height);
 }
 .container{max-width:1100px;margin:0 auto;padding:28px}
-.site-header{backdrop-filter: blur(6px);background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));border-bottom:1px solid rgba(15,23,42,0.04);position:sticky;top:0;z-index:40}
-.site-header .container{padding-top:8px;padding-bottom:8px}
+.site-header{backdrop-filter: blur(6px);background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.9));border-bottom:1px solid rgba(15,23,42,0.04);position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--header-height);}
+.site-header .container{height:var(--header-height);display:flex;align-items:center;padding-left:28px;padding-right:28px}
 .nav-inner{display:flex;align-items:center;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:18px;font-weight:700;color:var(--text);text-decoration:none}
 .brand .brand-text{font-family:'Poppins', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;font-weight:700;font-size:20px;letter-spacing:0.2px;color:var(--text)}
@@ -39,7 +41,7 @@ body{
 .btn-outline{background:transparent;border:1px solid rgba(15,23,42,0.06);color:var(--text)}
 .btn.large{padding:14px 20px;font-size:16px}
 
-.hero{display:grid;grid-template-columns:1fr 360px;gap:36px;align-items:start;padding-top:36px;padding-bottom:36px}
+.hero{display:grid;grid-template-columns:1fr;gap:36px;align-items:start;padding-top:36px;padding-bottom:36px}
 .site-title{font-size:40px;margin:0 0 12px 0;letter-spacing:-0.5px}
 .compass{font-size:26px;margin-left:6px}
 .lead{color:var(--muted-text);font-size:17px;line-height:1.6;margin-top:6px}
@@ -55,11 +57,11 @@ body{
 .profile-card .socials a{color:rgba(255,255,255,0.95);text-decoration:underline}
 
 /* About Me full-width profile */
-.about-me{padding:36px 0}
-.profile-card-full{background:linear-gradient(180deg,var(--accent) 0%, #b79bff 100%);color:white;box-shadow:var(--shadow);border-radius:18px;padding:36px 48px;}
-.profile-card-full .avatar{width:120px;height:120px;border-radius:999px;object-fit:cover;border:5px solid rgba(255,255,255,0.85);float:right;margin-left:24px}
+.about-me{padding:32px 0}
+.profile-card-full{background:transparent;color:var(--text);box-shadow:none;border-radius:12px;padding:36px 0}
+.profile-card-full .avatar{width:160px;height:160px;border-radius:999px;object-fit:cover;border:5px solid rgba(255,255,255,0.85);float:right;margin-left:24px}
 .profile-card-full h2{margin-top:6px;margin-bottom:12px}
-.profile-card-full .muted{color:rgba(255,255,255,0.95);font-size:16px;line-height:1.6}
+.profile-card-full .muted{color:var(--muted-text);font-size:16px;line-height:1.6}
 .profile-card-full .socials{margin-top:18px}
 
 @media (max-width:920px){
@@ -72,6 +74,21 @@ body{
 .link-card{display:inline-block;margin-top:10px;color:var(--accent-600);font-weight:600;text-decoration:none}
 
 .connect h2,.faq h2{margin-top:0}
+.section{padding:28px 0;scroll-margin-top:var(--header-height)}
+.section-heading{font-size:28px;font-weight:700;margin-bottom:10px;padding-bottom:8px;position:relative}
+
+/* place separators aligned to the content container so lines match column width */
+.section.container,
+.section .container{
+  border-top:1px solid rgba(15,23,42,0.03);
+}
+
+.card{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);transition:transform .18s ease,box-shadow .18s ease}
+.card:hover{transform:translateY(-8px);box-shadow:0 24px 48px rgba(15,23,42,0.08)}
+
+.book-slot{display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:white;border:1px solid rgba(15,23,42,0.06);color:var(--accent-600);font-weight:700;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
+.book-slot img{width:18px;height:18px}
+.book-slot:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(109,40,217,0.08)}
 .services{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px}
 .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow)}
 
@@ -80,7 +97,7 @@ body{
 .accordion-toggle{width:100%;text-align:left;padding:14px 18px;border:0;background:linear-gradient(180deg, #fff, #fbfbfd);font-weight:600;cursor:pointer;border-radius:10px}
 .accordion-panel{padding:0 18px;max-height:0;overflow:hidden;transition:max-height .28s ease}
 
-.site-footer{border-top:1px solid rgba(15,23,42,0.04);margin-top:48px;padding:22px 0;background:transparent}
+.site-footer{border-top:1px solid rgba(15,23,42,0.04);margin-top:18px;padding:22px 0;background:transparent}
 .footer-inner{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
 .footer-links{display:flex;gap:20px;align-items:center;justify-content:center}
 .footer-links a{margin:0;color:var(--muted-text);text-decoration:none}
