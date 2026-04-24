@@ -18,7 +18,7 @@ body{
   margin:0;
   font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   color:var(--text);
-  background: var(--section-bg-b);
+  background: transparent;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   padding-top: var(--header-height);
