@@ -94,14 +94,17 @@ main > section:nth-child(even){background:var(--section-bg-b)}
 /* reduce inner container padding for sections so headings sit closer to the top */
 .section > .container{padding-top:12px;padding-bottom:18px}
 
-.card{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);transition:transform .18s ease,box-shadow .18s ease}
-.card:hover{transform:translateY(-8px);box-shadow:0 24px 48px rgba(15,23,42,0.08)}
+.card{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);transition:transform .18s ease,box-shadow .18s ease;border:1px solid rgba(139,92,246,0.12);display:flex;flex-direction:column}
+.card:hover{transform:translateY(-8px);box-shadow:0 32px 64px rgba(15,23,42,0.16)}
+.card > p{flex-grow:1}
 
-.book-slot{display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:white;border:1px solid rgba(15,23,42,0.06);color:var(--accent-600);font-weight:700;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
+.book-slot{display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:white;border:1px solid rgba(15,23,42,0.06);color:var(--accent-600);font-weight:700;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,background-color .15s ease;margin-top:auto;align-self:center}
 .book-slot img{width:18px;height:18px}
-.book-slot:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(109,40,217,0.08)}
+.book-slot:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(109,40,217,0.08);background-color:var(--accent);color:white}
+.book-slot-inline{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:8px;background:white;border:1px solid rgba(139,92,246,0.2);color:var(--accent-600);font-weight:700;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,background-color .15s ease;font-size:inherit}
+.book-slot-inline:hover{background-color:var(--accent);color:white}
+.cta-fallback{color:var(--muted-text);font-size:16px;line-height:1.6;margin-top:20px;text-align:center}
 .services{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px}
-.card{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow)}
 
 .faq{margin-top:36px}
 .accordion-item{margin-bottom:12px;border-radius:10px;overflow:hidden}
