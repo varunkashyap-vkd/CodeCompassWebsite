@@ -28,7 +28,9 @@ body{
 .site-header .container{height:var(--header-height);display:flex;align-items:center;padding-left:28px;padding-right:28px}
 .nav-inner{display:flex;align-items:center;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:18px;font-weight:700;color:var(--text);text-decoration:none}
-.brand .brand-text{font-family:'Poppins', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;font-weight:700;font-size:20px;letter-spacing:0.2px;color:var(--text)}
+.brand .brand-text{display:flex;flex-direction:column;gap:8px;line-height:1.05}
+.brand .brand-title{font-family:'Poppins', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;font-weight:700;font-size:20px;letter-spacing:0.2px;color:var(--text)}
+.brand .brand-sub{font-size:12px;color:var(--muted-text);font-weight:500}
 .logo{width:96px;height:96px;object-fit:contain}
 .logo-sm{width:72px;height:72px}
 .site-nav{display:flex;align-items:center;gap:18px}
@@ -45,7 +47,7 @@ body{
 .btn.large{padding:14px 20px;font-size:16px}
 
 .hero{display:grid;grid-template-columns:1fr;gap:36px;align-items:start;padding-top:36px;padding-bottom:36px}
-.site-title{font-size:40px;margin:0 0 12px 0;letter-spacing:-0.5px}
+.site-title{font-size:40px;margin:0 0 12px 0;letter-spacing:-0.5px;font-family:'Manrope', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
 .compass{font-size:26px;margin-left:6px}
 .lead{color:var(--muted-text);font-size:17px;line-height:1.6;margin-top:6px}
 .lead-small{color:var(--muted-text);margin-top:10px}
