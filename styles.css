@@ -122,7 +122,7 @@ main > section:nth-child(even){background:var(--section-bg-b)}
 
 /* footer background */
 .site-footer{background:var(--footer-bg)}
-.section-heading{font-size:28px;font-weight:700;margin-bottom:10px;padding-bottom:8px;position:relative}
+.section-heading{font-size:28px;font-weight:700;margin-bottom:50px;padding-bottom:8px;position:relative}
 
 /* removed separators — rely on alternating background colors for section separation */
 
