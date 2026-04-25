@@ -20,12 +20,34 @@ document.addEventListener('DOMContentLoaded', function(){
     btn.addEventListener('click', ()=>{
       const panel = btn.nextElementSibling;
       const open = btn.classList.contains('open');
+      
+      // Close all other accordion items
+      accordions.forEach(otherBtn=>{
+        if(otherBtn !== btn && otherBtn.classList.contains('open')){
+          otherBtn.classList.remove('open');
+          const otherPanel = otherBtn.nextElementSibling;
+          otherPanel.classList.remove('open');
+          otherPanel.style.maxHeight = null;
+        }
+      });
+      
+      // Toggle current item
       if(open){
         btn.classList.remove('open');
+        panel.classList.remove('open');
         panel.style.maxHeight = null;
       } else {
         btn.classList.add('open');
-        panel.style.maxHeight = panel.scrollHeight + 'px';
+        panel.classList.add('open');
+        // Calculate max-height with extra padding for safety
+        const scrollHeight = panel.scrollHeight;
+        panel.style.maxHeight = scrollHeight + 32 + 'px';
+        
+        // Recalculate on next frame in case content needs to reflow
+        setTimeout(()=>{
+          const newHeight = panel.scrollHeight;
+          panel.style.maxHeight = newHeight + 32 + 'px';
+        }, 0);
       }
     });
   });
