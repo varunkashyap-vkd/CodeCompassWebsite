@@ -98,4 +98,62 @@ document.addEventListener('DOMContentLoaded', function(){
     // ensure immediate state is correct
     updateActiveByPosition();
   }
+
+  // Counter animation for stats section
+  const aboutSection = document.getElementById('about');
+  if(aboutSection){
+    const counterIO = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting && !entry.target.dataset.counted){
+          entry.target.dataset.counted = 'true';
+          const statNumbers = entry.target.querySelectorAll('.stat-number');
+          statNumbers.forEach(elem=>{
+            const target = parseInt(elem.dataset.target);
+            const duration = 2000; // 2 seconds
+            const start = Date.now();
+            
+            const animate = ()=>{
+              const now = Date.now();
+              const elapsed = now - start;
+              const progress = Math.min(elapsed / duration, 1);
+              const current = Math.floor(progress * target);
+              
+              elem.textContent = current;
+              
+              if(progress < 1){
+                requestAnimationFrame(animate);
+              } else {
+                elem.textContent = target + '+';
+              }
+            };
+            animate();
+          });
+          counterIO.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.3});
+    
+    counterIO.observe(aboutSection);
+  }
+
+  // Companies logos animation - triggers when companies section comes into view
+  const companiesSection = document.querySelector('.companies-section');
+  if(companiesSection){
+    const companiesIO = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting && !entry.target.dataset.animated){
+          entry.target.dataset.animated = 'true';
+          const logos = entry.target.querySelectorAll('.company-logo');
+          logos.forEach((logo, index)=>{
+            setTimeout(()=>{
+              logo.classList.add('animate-in');
+            }, index * 500); // 0s, 0.5s, 1s delay for 3 total seconds
+          });
+          companiesIO.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.5});
+    
+    companiesIO.observe(companiesSection);
+  }
 });
