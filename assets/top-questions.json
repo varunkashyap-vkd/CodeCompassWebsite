@@ -5,11 +5,11 @@
       "description": "A focused set of 150 commonly asked problems from LeetCode to strengthen your interview preparation. <br>Ideal for building clarity in patterns and structured problem-solving.",
       "items": [
         {
-          "title": "Two Sum",
+          "title": "Merge Sorted Array",
           "difficulty": "Easy",
           "domain": "Array",
-          "videoUrl": "https://www.youtube.com/results?search_query=Code+Compass+Two+Sum",
-          "problemUrl": "https://leetcode.com/problems/two-sum/"
+          "videoUrl": "https://www.youtube.com/watch?v=U9QmF7-SbP0&t=209s",
+          "problemUrl": "https://leetcode.com/problems/merge-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150"
         },
         {
           "title": "Trapping Rain Water",
