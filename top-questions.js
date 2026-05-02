@@ -16,37 +16,36 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         return `
           <tr>
-            <td>${itemIndex + 1}</td>
-            <td><a class="table-link" href="${videoUrl}" target="_blank" rel="noopener">${rowTitle}</a></td>
+            <td class="col-sno">${itemIndex + 1}</td>
+            <td class="col-problem"><a class="table-link problem-link" href="${videoUrl}" target="_blank" rel="noopener">${rowTitle}</a></td>
             <td><span class="difficulty-pill ${safeDifficulty}">${item.difficulty}</span></td>
             <td>${item.domain || 'General'}</td>
-            <td><a class="table-link" href="${videoUrl}" target="_blank" rel="noopener">Watch <i class="fa-brands fa-youtube"></i></a></td>
+            <td class="col-watch"><a class="table-link watch-link" href="${videoUrl}" target="_blank" rel="noopener">Watch <i class="fa-brands fa-youtube"></i></a></td>
           </tr>
         `;
       }).join('') : '';
 
       return `
-        <article class="list-block reveal">
-          <div class="list-meta">
-            <span class="list-chip">List ${listIndex + 1}</span>
-            <h2>${list.title}</h2>
-          </div>
-          <p class="lead list-copy">${list.description}</p>
-          <div class="table-frame">
-            <table class="topic-table">
-              <thead>
-                <tr>
-                  <th>S. No.</th>
-                  <th>Problem Name</th>
-                  <th>Difficulty</th>
-                  <th>Domain</th>
-                  <th>Code Compass Solution</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${rows || '<tr><td colspan="5">No problems added yet.</td></tr>'}
-              </tbody>
-            </table>
+        <article class="list-block reveal" id="list-${listIndex}">
+          <div class="container">
+            <h2 class="list-title">${list.title}</h2>
+            <p class="lead list-copy">${list.description}</p>
+            <div class="table-frame">
+              <table class="topic-table">
+                <thead>
+                  <tr>
+                    <th>S.No.</th>
+                    <th>Problem Name</th>
+                    <th>Difficulty</th>
+                    <th>Domain</th>
+                    <th>Code Compass Solution</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rows || '<tr><td colspan="5">No problems added yet.</td></tr>'}
+                </tbody>
+              </table>
+            </div>
           </div>
         </article>
       `;
@@ -54,6 +53,18 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     root.querySelectorAll('.reveal').forEach(el => {
       requestAnimationFrame(() => el.classList.add('visible'));
+    });
+
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const listIndex = btn.dataset.list;
+        const targetList = document.getElementById(`list-${listIndex}`);
+        if (targetList) {
+          const headerHeight = document.querySelector('.site-header')?.offsetHeight || 96;
+          const targetY = window.scrollY + targetList.getBoundingClientRect().top - headerHeight - 20;
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+        }
+      });
     });
   };
 
