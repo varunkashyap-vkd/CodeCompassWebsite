@@ -2,13 +2,14 @@
   "lists": [
     {
       "title": "Leetcode Top Interview 150",
-      "description": "A curated shortlist of high-frequency Leetcode problems that appear in top interviews. Each entry links to a Code Compass solution video.",
+      "description": "A focused set of 150 commonly asked problems from LeetCode to strengthen your interview preparation. <br>Ideal for building clarity in patterns and structured problem-solving.",
       "items": [
         {
           "title": "Two Sum",
           "difficulty": "Easy",
           "domain": "Array",
-          "videoUrl": "https://www.youtube.com/results?search_query=Code+Compass+Two+Sum"
+          "videoUrl": "https://www.youtube.com/results?search_query=Code+Compass+Two+Sum",
+          "problemUrl": "https://leetcode.com/problems/two-sum/"
         },
         {
           "title": "Trapping Rain Water",
@@ -31,8 +32,8 @@
       ]
     },
     {
-      "title": "Blind Curated 75",
-      "description": "A blind practice collection focused on core algorithm and data structure patterns that strengthen interview problem-solving.",
+      "title": "Teamblind Curated 75",
+      "description": "A focused collection of 75 frequently asked problems gathered from TeamBlind insights. <br>Ideal for strengthening fundamentals and targeting real interview patterns.",
       "items": [
         {
           "title": "Reverse Linked List",

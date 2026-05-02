@@ -11,13 +11,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     root.innerHTML = lists.map((list, listIndex) => {
       const rows = Array.isArray(list.items) ? list.items.map((item, itemIndex) => {
         const safeDifficulty = String(item.difficulty || '').toLowerCase();
-        const rowTitle = item.title || 'Untitled Problem';
+        const rowTitle = item.title + "<i class=\"fa-solid fa-arrow-up-right-from-square\"></i>" || 'Untitled Problem';
         const videoUrl = item.videoUrl || '#';
+        const problemUrl = item.problemUrl || '#';
 
         return `
           <tr>
             <td class="col-sno">${itemIndex + 1}</td>
-            <td class="col-problem"><a class="table-link problem-link" href="${videoUrl}" target="_blank" rel="noopener">${rowTitle}</a></td>
+            <td class="col-problem"><a class="table-link problem-link" href="${problemUrl}" target="_blank" rel="noopener">${rowTitle}</a></td>
             <td><span class="difficulty-pill ${safeDifficulty}">${item.difficulty}</span></td>
             <td>${item.domain || 'General'}</td>
             <td class="col-watch"><a class="table-link watch-link" href="${videoUrl}" target="_blank" rel="noopener">Watch <i class="fa-brands fa-youtube"></i></a></td>
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       return `
         <article class="list-block reveal" id="list-${listIndex}">
           <div class="container">
-            <h2 class="list-title">${list.title}</h2>
+            <h3 class="list-title">${list.title}</h3>
             <p class="lead list-copy">${list.description}</p>
             <div class="table-frame">
               <table class="topic-table">
@@ -61,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const targetList = document.getElementById(`list-${listIndex}`);
         if (targetList) {
           const headerHeight = document.querySelector('.site-header')?.offsetHeight || 96;
-          const targetY = window.scrollY + targetList.getBoundingClientRect().top - headerHeight - 20;
+          const targetY = window.scrollY + targetList.getBoundingClientRect().top - headerHeight;
           window.scrollTo({ top: targetY, behavior: 'smooth' });
         }
       });
