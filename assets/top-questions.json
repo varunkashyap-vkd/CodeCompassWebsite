@@ -1,0 +1,64 @@
+{
+  "lists": [
+    {
+      "title": "Leetcode Top Interview 150",
+      "description": "A curated shortlist of high-frequency Leetcode problems that appear in top interviews. Each entry links to a Code Compass solution video.",
+      "items": [
+        {
+          "title": "Two Sum",
+          "difficulty": "Easy",
+          "domain": "Array",
+          "videoUrl": "https://www.youtube.com/results?search_query=Code+Compass+Two+Sum"
+        },
+        {
+          "title": "Trapping Rain Water",
+          "difficulty": "Hard",
+          "domain": "Array",
+          "videoUrl": "https://www.youtube.com/results?search_query=Code+Compass+Trapping+Rain+Water"
+        },
+        {
+          "title": "Merge Intervals",
+          "difficulty": "Medium",
+          "domain": "Array",
+          "videoUrl": "https://www.youtube.com/results?search_query=Code+Compass+Merge+Intervals"
+        },
+        {
+          "title": "Binary Tree Level Order Traversal",
+          "difficulty": "Medium",
+          "domain": "Tree",
+          "videoUrl": "https://www.youtube.com/results?search_query=Code+Compass+Binary+Tree+Level+Order+Traversal"
+        }
+      ]
+    },
+    {
+      "title": "Blind Curated 75",
+      "description": "A blind practice collection focused on core algorithm and data structure patterns that strengthen interview problem-solving.",
+      "items": [
+        {
+          "title": "Reverse Linked List",
+          "difficulty": "Easy",
+          "domain": "Linked List",
+          "videoUrl": "https://www.youtube.com/results?search_query=Code+Compass+Reverse+Linked+List"
+        },
+        {
+          "title": "Maximum Subarray",
+          "difficulty": "Medium",
+          "domain": "Array",
+          "videoUrl": "https://www.youtube.com/results?search_query=Code+Compass+Maximum+Subarray"
+        },
+        {
+          "title": "Lowest Common Ancestor",
+          "difficulty": "Medium",
+          "domain": "Tree",
+          "videoUrl": "https://www.youtube.com/results?search_query=Code+Compass+Lowest+Common+Ancestor"
+        },
+        {
+          "title": "Word Break",
+          "difficulty": "Medium",
+          "domain": "Dynamic Programming",
+          "videoUrl": "https://www.youtube.com/results?search_query=Code+Compass+Word+Break"
+        }
+      ]
+    }
+  ]
+}
