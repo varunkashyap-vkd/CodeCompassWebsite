@@ -1,6 +1,39 @@
 document.addEventListener('DOMContentLoaded', async function() {
+  const WATCH_REDIRECT_ENABLED = false; // set to true when YouTube videos are ready
   const root = document.getElementById('top-questions-root');
   if (!root) return;
+
+  const showToast = (message, anchor = null) => {
+    let toast = document.querySelector('.toast-message');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'toast-message';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+
+    if (anchor) {
+      const rect = anchor.getBoundingClientRect();
+      toast.style.position = 'absolute';
+      toast.style.left = `${rect.left + window.scrollX + rect.width / 2}px`;
+      toast.style.top = `${rect.bottom + window.scrollY + 12}px`;
+      toast.style.bottom = 'auto';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+    } else {
+      toast.style.position = 'fixed';
+      toast.style.left = '50%';
+      toast.style.bottom = '24px';
+      toast.style.top = 'auto';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+    }
+
+    toast.classList.add('toast-visible');
+    clearTimeout(toast.dataset.timeoutId);
+    const timeoutId = window.setTimeout(() => {
+      toast.classList.remove('toast-visible');
+    }, 2200);
+    toast.dataset.timeoutId = timeoutId;
+  };
 
   const renderLists = (lists) => {
     if (!Array.isArray(lists) || !lists.length) {
@@ -67,6 +100,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
       });
     });
+
+    if (!WATCH_REDIRECT_ENABLED) {
+      root.querySelectorAll('.watch-link').forEach(link => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          showToast('Coming soon', event.currentTarget);
+        });
+      });
+    }
   };
 
   try {

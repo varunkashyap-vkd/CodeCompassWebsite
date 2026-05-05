@@ -178,6 +178,31 @@ main > section:nth-child(even){background:var(--section-bg-b)}
 @media (max-width:860px){.topic-table{min-width:0}.topic-table th,.topic-table td{padding:14px 12px}.list-title{padding:0 12px}.list-copy{margin:8px 12px}.table-frame{margin:0 12px 20px}}
 @media (max-width:680px){.top-questions-nav{flex-direction:column}.nav-btn{width:100%}.topic-table th:last-child,.topic-table td:last-child{min-width:120px}}
 
+.toast-message{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(12px);
+  background:linear-gradient(135deg, rgba(139,92,246,0.95), rgba(167,139,250,0.95));
+  color:#f8f7ff;
+  padding:12px 18px;
+  border-radius:999px;
+  box-shadow:0 18px 30px rgba(79, 43, 175, 0.24);
+  opacity:0;
+  pointer-events:none;
+  transition:transform .28s ease,opacity .28s ease;
+  z-index:2000;
+  font-size:14px;
+  letter-spacing:0.01em;
+  max-width:calc(100vw - 32px);
+  text-align:center;
+  border:1px solid rgba(255,255,255,0.22);
+}
+.toast-message.toast-visible{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
 /* removed separators — rely on alternating background colors for section separation */
 
 /* reduce inner container padding for sections so headings sit closer to the top */
