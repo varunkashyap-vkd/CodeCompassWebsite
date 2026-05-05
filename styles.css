@@ -112,7 +112,7 @@ body{
 
 /* Companies section */
 .companies-section{display:flex;flex-direction:column;gap:12px;align-items:center;width:100%}
-.companies-label{font-size:12px;color:var(--muted-text);font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.companies-label{font-size:12px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
 
 /* Companies logos section */
 .companies-logos{display:flex;gap:16px;align-items:center;justify-content:center;width:100%}

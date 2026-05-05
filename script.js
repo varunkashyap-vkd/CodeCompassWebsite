@@ -52,6 +52,13 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 
+  function scrollToTargetElement(target, behavior = 'smooth'){
+    const headerHeight = headerEl ? headerEl.offsetHeight : (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 96);
+    const rect = target.getBoundingClientRect();
+    const targetY = window.scrollY + rect.top - headerHeight;
+    window.scrollTo({top: targetY, behavior});
+  }
+
   document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
     anchor.addEventListener('click', function(e){
       const href = anchor.getAttribute('href');
@@ -59,14 +66,18 @@ document.addEventListener('DOMContentLoaded', function(){
         const target = document.querySelector(href);
         if(target){
           e.preventDefault();
-          const headerHeight = headerEl ? headerEl.offsetHeight : (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 96);
-          const rect = target.getBoundingClientRect();
-          const targetY = window.scrollY + rect.top - headerHeight;
-          window.scrollTo({top: targetY, behavior: 'smooth'});
+          scrollToTargetElement(target, 'smooth');
         }
       }
     });
   });
+
+  if(window.location.hash){
+    const target = document.querySelector(window.location.hash);
+    if(target){
+      window.requestAnimationFrame(()=> scrollToTargetElement(target, 'auto'));
+    }
+  }
 
   // Scroll-spy: highlight nav item for section in view (use header bottom as reference)
   const navLinks = Array.from(document.querySelectorAll('.site-nav a'))
