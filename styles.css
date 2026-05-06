@@ -23,6 +23,16 @@
   from{opacity:0;transform:scale(0.8)}
   to{opacity:1;transform:scale(1)}
 }
+
+@keyframes toastEnter {
+  from{opacity:0;transform:translateX(-50%) translateY(5px)}
+  to{opacity:1;transform:translateX(-50%) translateY(0)}
+}
+
+@keyframes toastExit {
+  from{opacity:1;transform:translateX(-50%) translateY(0)}
+  to{opacity:0;transform:translateX(-50%) translateY(5px)}
+}
 *{box-sizing:border-box}
 html,body{height:100%}
 html{scroll-padding-top:var(--header-height)}
@@ -182,7 +192,7 @@ main > section:nth-child(even){background:var(--section-bg-b)}
   position:fixed;
   bottom:24px;
   left:50%;
-  transform:translateX(-50%) translateY(12px);
+  transform:translateX(-50%) translateY(20px);
   background:linear-gradient(135deg, rgba(139,92,246,0.95), rgba(167,139,250,0.95));
   color:#f8f7ff;
   padding:12px 18px;
@@ -190,7 +200,6 @@ main > section:nth-child(even){background:var(--section-bg-b)}
   box-shadow:0 18px 30px rgba(79, 43, 175, 0.24);
   opacity:0;
   pointer-events:none;
-  transition:transform .28s ease,opacity .28s ease;
   z-index:2000;
   font-size:14px;
   letter-spacing:0.01em;
@@ -199,8 +208,12 @@ main > section:nth-child(even){background:var(--section-bg-b)}
   border:1px solid rgba(255,255,255,0.22);
 }
 .toast-message.toast-visible{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
+  animation:toastEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events:auto;
+}
+.toast-message.toast-exiting{
+  animation:toastExit 0.6s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+  pointer-events:none;
 }
 
 /* removed separators — rely on alternating background colors for section separation */

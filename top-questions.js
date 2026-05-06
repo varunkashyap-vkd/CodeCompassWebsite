@@ -27,10 +27,16 @@ document.addEventListener('DOMContentLoaded', async function() {
       toast.style.transform = 'translateX(-50%) translateY(0)';
     }
 
+    toast.classList.remove('toast-exiting');
     toast.classList.add('toast-visible');
     clearTimeout(toast.dataset.timeoutId);
+    clearTimeout(toast.dataset.exitTimeoutId);
     const timeoutId = window.setTimeout(() => {
-      toast.classList.remove('toast-visible');
+      toast.classList.add('toast-exiting');
+      const exitTimeoutId = window.setTimeout(() => {
+        toast.classList.remove('toast-visible');
+      }, 600);
+      toast.dataset.exitTimeoutId = exitTimeoutId;
     }, 2200);
     toast.dataset.timeoutId = timeoutId;
   };
