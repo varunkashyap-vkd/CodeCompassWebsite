@@ -3,6 +3,92 @@ document.addEventListener('DOMContentLoaded', async function() {
   const root = document.getElementById('top-questions-root');
   if (!root) return;
 
+  const listNavigator = document.getElementById('list-navigator');
+  const navPrevLink = document.getElementById('nav-prev-link');
+  const navNextLink = document.getElementById('nav-next-link');
+  let totalLists = 0;
+  let navigatorVisible = false;
+
+  const showNavigator = () => {
+    if (!navigatorVisible) {
+      listNavigator.classList.add('visible');
+      listNavigator.classList.remove('hidden');
+      navigatorVisible = true;
+    }
+  };
+
+  const hideNavigator = () => {
+    if (navigatorVisible) {
+      listNavigator.classList.add('hidden');
+      listNavigator.classList.remove('visible');
+      navigatorVisible = false;
+    }
+  };
+
+  const handleNavigatorVisibility = () => {
+    const firstList = document.getElementById('list-0');
+    if (!firstList) return;
+
+    const rect = firstList.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+
+    // Show navigator if we've scrolled past the top of the first list
+    if (rect.top < viewportHeight) {
+      showNavigator();
+    } else {
+      hideNavigator();
+    }
+  };
+
+  const scrollToList = (listIndex) => {
+    const targetList = document.getElementById(`list-${listIndex}`);
+    if (targetList) {
+      const headerHeight = document.querySelector('.site-header')?.offsetHeight || 96;
+      const targetY = window.scrollY + targetList.getBoundingClientRect().top - headerHeight;
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
+    }
+  };
+
+  const getCurrentListIndex = () => {
+    const lists = Array.from(document.querySelectorAll('[id^="list-"]'));
+    let currentIndex = 0;
+    let maxVisibleArea = 0;
+
+    lists.forEach((list, index) => {
+      const rect = list.getBoundingClientRect();
+      const visibleTop = Math.max(0, rect.top);
+      const visibleBottom = Math.min(window.innerHeight, rect.bottom);
+      const visibleArea = Math.max(0, visibleBottom - visibleTop);
+
+      if (visibleArea > maxVisibleArea) {
+        maxVisibleArea = visibleArea;
+        currentIndex = index;
+      }
+    });
+
+    return currentIndex;
+  };
+
+  const setupNavigatorListeners = () => {
+    navPrevLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const currentIndex = getCurrentListIndex();
+      if (currentIndex > 0) {
+        scrollToList(currentIndex - 1);
+      }
+    });
+
+    navNextLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const currentIndex = getCurrentListIndex();
+      if (currentIndex < totalLists - 1) {
+        scrollToList(currentIndex + 1);
+      }
+    });
+
+    window.addEventListener('scroll', handleNavigatorVisibility);
+  };
+
   const showToast = (message, anchor = null) => {
     let toast = document.querySelector('.toast-message');
     if (!toast) {
@@ -144,6 +230,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
       });
     }
+
+    // Store total number of lists and setup navigator
+    totalLists = lists.length;
+    setupNavigatorListeners();
+    handleNavigatorVisibility(); // Initialize visibility state
   };
 
   try {
