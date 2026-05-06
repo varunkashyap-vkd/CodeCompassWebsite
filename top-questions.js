@@ -47,6 +47,27 @@ document.addEventListener('DOMContentLoaded', async function() {
       return;
     }
 
+    // Collect all unique domains
+    const allDomains = new Set();
+    lists.forEach(list => {
+      if (Array.isArray(list.items)) {
+        list.items.forEach(item => {
+          if (Array.isArray(item.domain)) {
+            item.domain.forEach(d => allDomains.add(d));
+          } else if (item.domain) {
+            allDomains.add(item.domain);
+          }
+        });
+      }
+    });
+
+    // Assign colors to domains - vibrant, readable colors
+    const domainColors = {};
+    const colors = ['#3B82F6', '#10B981', '#8B5CF6', '#EF4444', '#F97316', '#06B6D4', '#EC4899', '#FBBF24', '#6366F1', '#14B8A6', '#F43F5E', '#84CC16', '#0EA5E9', '#A78BFA', '#FB923C'];
+    Array.from(allDomains).sort().forEach((domain, index) => {
+      domainColors[domain] = colors[index % colors.length];
+    });
+
     root.innerHTML = lists.map((list, listIndex) => {
       const rows = Array.isArray(list.items) ? list.items.map((item, itemIndex) => {
         const safeDifficulty = String(item.difficulty || '').toLowerCase();
@@ -54,12 +75,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         const videoUrl = item.videoUrl || '#';
         const problemUrl = item.problemUrl || '#';
 
+        // Render domain tags
+        let domainHtml = '';
+        if (Array.isArray(item.domain)) {
+          domainHtml = item.domain.map(d => `<span class="domain-tag" style="background-color: ${domainColors[d] || '#ccc'}">${d}</span>`).join(' ');
+        } else {
+          domainHtml = item.domain || 'General';
+        }
+
         return `
           <tr>
             <td class="col-sno">${itemIndex + 1}</td>
             <td class="col-problem"><a class="table-link problem-link" href="${problemUrl}" target="_blank" rel="noopener">${rowTitle}</a></td>
             <td><span class="difficulty-pill ${safeDifficulty}">${item.difficulty}</span></td>
-            <td>${item.domain || 'General'}</td>
+            <td>${domainHtml}</td>
             <td class="col-watch"><a class="table-link watch-link" href="${videoUrl}" target="_blank" rel="noopener">Watch <i class="fa-brands fa-youtube"></i></a></td>
           </tr>
         `;
