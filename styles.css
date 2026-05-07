@@ -393,7 +393,7 @@ main > section:nth-child(even){background:var(--section-bg-b)}
   width:48px;
   height:48px;
   border-radius:15%;
-  background:var(--accent);
+  background:var(--accent-600);
   color:white;
   border:1px solid rgba(139,92,246,0.3);
   font-weight:700;
