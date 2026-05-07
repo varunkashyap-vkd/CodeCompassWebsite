@@ -38,6 +38,7 @@
 
   <main>
     <section class="reveal section top-questions-page">
+      <div id="top-section" class="page-anchor"></div>
       <div class="container">
         <div class="top-questions-intro">
           <h1 class="site-title">Frequently Asked Interview Questions</h1>
@@ -58,18 +59,18 @@
       </div>
 
       <!-- Floating Navigator -->
-      <nav id="list-navigator" class="list-navigator">
-        <a href="#" class="nav-link nav-link-prev" id="nav-prev-link" data-direction="prev" title="Previous List">
-          <span class="nav-text">Previous List</span> <i class="fa-solid fa-angles-up"></i>
-        </a>
-        <a href="#" class="nav-link nav-link-next" id="nav-next-link" data-direction="next" title="Next List">
-          <span class="nav-text">Next List</span> <i class="fa-solid fa-angles-down"></i>
-        </a>
+      <nav id="list-navigator" class="list-navigator" aria-label="Top questions navigation">
+        <button type="button" class="nav-link" id="nav-up-btn" title="Scroll up">
+          <i class="fa-solid fa-angles-up"></i>
+        </button>
+        <button type="button" class="nav-link" id="nav-down-btn" title="Scroll down">
+          <i class="fa-solid fa-angles-down"></i>
+        </button>
       </nav>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" id="footer-section">
     <div class="container footer-inner">
       <div class="footer-connect">Connect with us  <i class="fa-solid fa-share-nodes"></i></div>
       <div class="footer-links">

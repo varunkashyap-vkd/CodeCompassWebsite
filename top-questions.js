@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', async function() {
   if (!root) return;
 
   const listNavigator = document.getElementById('list-navigator');
-  const navPrevLink = document.getElementById('nav-prev-link');
-  const navNextLink = document.getElementById('nav-next-link');
-  let totalLists = 0;
+  const navUpBtn = document.getElementById('nav-up-btn');
+  const navDownBtn = document.getElementById('nav-down-btn');
+  const sectionOrder = ['top-section', 'list-0', 'list-1', 'footer-section'];
   let navigatorVisible = false;
 
   const showNavigator = () => {
@@ -17,51 +17,18 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   };
 
-  const hideNavigator = () => {
-    if (navigatorVisible) {
-      listNavigator.classList.add('hidden');
-      listNavigator.classList.remove('visible');
-      navigatorVisible = false;
-    }
-  };
+  const getHeaderHeight = () => document.querySelector('.site-header')?.offsetHeight || 96;
 
-  const handleNavigatorVisibility = () => {
-    const firstList = document.getElementById('list-0');
-    if (!firstList) return;
-
-    const rect = firstList.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-
-    // Show navigator if we've scrolled past the top of the first list
-    if (rect.top < viewportHeight) {
-      showNavigator();
-    } else {
-      hideNavigator();
-    }
-  };
-
-  const scrollToList = (listIndex) => {
-    const targetList = document.getElementById(`list-${listIndex}`);
-    if (targetList) {
-      const headerHeight = document.querySelector('.site-header')?.offsetHeight || 96;
-      const targetY = window.scrollY + targetList.getBoundingClientRect().top - headerHeight;
-      window.scrollTo({ top: targetY, behavior: 'smooth' });
-    }
-  };
-
-  const getCurrentListIndex = () => {
-    const lists = Array.from(document.querySelectorAll('[id^="list-"]'));
+  const getSectionIndex = () => {
+    const headerHeight = getHeaderHeight();
+    const triggerY = window.scrollY + headerHeight + window.innerHeight * 0.2;
     let currentIndex = 0;
-    let maxVisibleArea = 0;
 
-    lists.forEach((list, index) => {
-      const rect = list.getBoundingClientRect();
-      const visibleTop = Math.max(0, rect.top);
-      const visibleBottom = Math.min(window.innerHeight, rect.bottom);
-      const visibleArea = Math.max(0, visibleBottom - visibleTop);
-
-      if (visibleArea > maxVisibleArea) {
-        maxVisibleArea = visibleArea;
+    sectionOrder.forEach((id, index) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const top = window.scrollY + el.getBoundingClientRect().top;
+      if (triggerY >= top) {
         currentIndex = index;
       }
     });
@@ -69,24 +36,77 @@ document.addEventListener('DOMContentLoaded', async function() {
     return currentIndex;
   };
 
+  const isAtSectionTop = (index) => {
+    if (index < 0 || index >= sectionOrder.length) return false;
+
+    const targetId = sectionOrder[index];
+    if (targetId === 'top-section') {
+      return window.scrollY <= 10; // Close to top
+    }
+
+    const target = document.getElementById(targetId);
+    if (!target) return false;
+
+    const headerHeight = getHeaderHeight();
+    const targetY = window.scrollY + target.getBoundingClientRect().top - headerHeight;
+    return Math.abs(window.scrollY - targetY) <= 10; // Within 10px tolerance
+  };
+
+  const scrollToSection = (index) => {
+    if (index < 0 || index >= sectionOrder.length) return;
+
+    const targetId = sectionOrder[index];
+    if (targetId === 'top-section') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    const headerHeight = getHeaderHeight();
+    const targetY = window.scrollY + target.getBoundingClientRect().top - headerHeight;
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+  };
+
+  const updateNavigatorButtons = () => {
+    const currentIndex = getSectionIndex();
+
+    if (navUpBtn) {
+      navUpBtn.disabled = isAtSectionTop(currentIndex) && currentIndex === 0;
+    }
+    if (navDownBtn) {
+      navDownBtn.disabled = currentIndex === sectionOrder.length - 1;
+    }
+  };
+
   const setupNavigatorListeners = () => {
-    navPrevLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      const currentIndex = getCurrentListIndex();
-      if (currentIndex > 0) {
-        scrollToList(currentIndex - 1);
-      }
-    });
+    if (navUpBtn) {
+      navUpBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const currentIndex = getSectionIndex();
+        if (!isAtSectionTop(currentIndex)) {
+          // Scroll to top of current section
+          scrollToSection(currentIndex);
+        } else {
+          // Go to previous section
+          scrollToSection(Math.max(0, currentIndex - 1));
+        }
+      });
+    }
 
-    navNextLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      const currentIndex = getCurrentListIndex();
-      if (currentIndex < totalLists - 1) {
-        scrollToList(currentIndex + 1);
-      }
-    });
+    if (navDownBtn) {
+      navDownBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const currentIndex = getSectionIndex();
+        // Always go to next section
+        scrollToSection(Math.min(sectionOrder.length - 1, currentIndex + 1));
+      });
+    }
 
-    window.addEventListener('scroll', handleNavigatorVisibility);
+    window.addEventListener('scroll', updateNavigatorButtons);
+    window.addEventListener('resize', updateNavigatorButtons);
+    showNavigator();
   };
 
   const showToast = (message, anchor = null) => {
@@ -231,10 +251,8 @@ document.addEventListener('DOMContentLoaded', async function() {
       });
     }
 
-    // Store total number of lists and setup navigator
-    totalLists = lists.length;
     setupNavigatorListeners();
-    handleNavigatorVisibility(); // Initialize visibility state
+    updateNavigatorButtons();
   };
 
   try {
