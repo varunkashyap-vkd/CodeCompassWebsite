@@ -242,14 +242,19 @@ document.addEventListener('DOMContentLoaded', async function() {
       });
     });
 
-    if (!WATCH_REDIRECT_ENABLED) {
-      root.querySelectorAll('.watch-link').forEach(link => {
-        link.addEventListener('click', (event) => {
+    // For each watch link, if a valid video URL is present let the link open normally.
+    // If the URL is missing or set to a placeholder (like '#'), show the "Coming soon" toast.
+    root.querySelectorAll('.watch-link').forEach(link => {
+      link.addEventListener('click', (event) => {
+        const href = (link.getAttribute('href') || '').trim();
+        const isPlaceholder = !href || href === '#';
+        if (isPlaceholder) {
           event.preventDefault();
           showToast('Coming soon', event.currentTarget);
-        });
+        }
+        // otherwise allow default behavior (open the video URL)
       });
-    }
+    });
 
     setupNavigatorListeners();
     updateNavigatorButtons();
