@@ -178,7 +178,11 @@ document.addEventListener('DOMContentLoaded', async function() {
       const rows = Array.isArray(list.items) ? list.items.map((item, itemIndex) => {
         const safeDifficulty = String(item.difficulty || '').toLowerCase();
         const rowTitle = item.title + "<i class=\"fa-solid fa-arrow-up-right-from-square\"></i>" || 'Untitled Problem';
-        const videoUrl = item.videoUrl || '#';
+        const videoUrl = (item.videoUrl || '').trim();
+        const hasVideo = Boolean(videoUrl);
+        const videoLabel = hasVideo
+          ? 'Watch <i class="fa-brands fa-youtube"></i>'
+          : 'Coming Soon <i class="fa-solid fa-hourglass-half"></i>';
         const problemUrl = item.problemUrl || '#';
 
         // Render domain tags
@@ -195,7 +199,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             <td class="col-problem"><a class="table-link problem-link" href="${problemUrl}" target="_blank" rel="noopener">${rowTitle}</a></td>
             <td><span class="difficulty-pill ${safeDifficulty}">${item.difficulty}</span></td>
             <td>${domainHtml}</td>
-            <td class="col-watch"><a class="table-link watch-link" href="${videoUrl}" target="_blank" rel="noopener">Watch <i class="fa-brands fa-youtube"></i></a></td>
+            <td class="col-watch"><a class="table-link watch-link" href="${hasVideo ? videoUrl : '#'}" target="_blank" rel="noopener">${videoLabel}</a></td>
           </tr>
         `;
       }).join('') : '';
