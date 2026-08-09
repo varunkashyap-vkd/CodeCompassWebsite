@@ -252,11 +252,12 @@ document.addEventListener('DOMContentLoaded', async function() {
       link.addEventListener('click', (event) => {
         const href = (link.getAttribute('href') || '').trim();
         const isPlaceholder = !href || href === '#';
-        if (isPlaceholder) {
+        const hasVideoLink = Boolean(href && href !== '#');
+        if (isPlaceholder || (!WATCH_REDIRECT_ENABLED && hasVideoLink)) {
           event.preventDefault();
+          event.stopImmediatePropagation();
           showToast('Coming soon', event.currentTarget);
         }
-        // otherwise allow default behavior (open the video URL)
       });
     });
 

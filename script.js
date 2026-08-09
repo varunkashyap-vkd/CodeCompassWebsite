@@ -52,6 +52,56 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 
+  const isYoutubeHref = (href) => typeof href === 'string' && /(?:youtube\.com|youtu\.be)/i.test(href);
+
+  const showToast = (message, anchor = null) => {
+    let toast = document.querySelector('.toast-message');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'toast-message';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+
+    if (anchor) {
+      const rect = anchor.getBoundingClientRect();
+      toast.style.position = 'absolute';
+      toast.style.left = `${rect.left + window.scrollX + rect.width / 2}px`;
+      toast.style.top = `${rect.bottom + window.scrollY + 12}px`;
+      toast.style.bottom = 'auto';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+    } else {
+      toast.style.position = 'fixed';
+      toast.style.left = '50%';
+      toast.style.bottom = '24px';
+      toast.style.top = 'auto';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+    }
+
+    toast.classList.remove('toast-exiting');
+    toast.classList.add('toast-visible');
+    clearTimeout(toast.dataset.timeoutId);
+    clearTimeout(toast.dataset.exitTimeoutId);
+    const timeoutId = window.setTimeout(() => {
+      toast.classList.add('toast-exiting');
+      const exitTimeoutId = window.setTimeout(() => {
+        toast.classList.remove('toast-visible');
+      }, 600);
+      toast.dataset.exitTimeoutId = exitTimeoutId;
+    }, 2200);
+    toast.dataset.timeoutId = timeoutId;
+  };
+
+  document.querySelectorAll('a[href]').forEach(anchor => {
+    const href = anchor.getAttribute('href') || '';
+    if (isYoutubeHref(href)) {
+      anchor.addEventListener('click', (event) => {
+        event.preventDefault();
+        showToast('Coming soon', anchor);
+      });
+    }
+  });
+
   function scrollToTargetElement(target, behavior = 'smooth'){
     const headerHeight = headerEl ? headerEl.offsetHeight : (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 96);
     const rect = target.getBoundingClientRect();
